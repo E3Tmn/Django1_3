@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from places.models import Place, Image
 from django.http import JsonResponse
+from django.urls import reverse
 
 
 def show_detail_place(request, place_id):  
@@ -34,7 +35,10 @@ def show_startpage(request):
           "properties": {
             "title": place.title,
             "placeId": place.id,
-            "detailsUrl": "static/places/moscow_legends.json"
+            "detailsUrl": reverse(
+                show_detail_place,
+                kwargs={'place_id': place.id}
+            )
           }
         } for place in db_places
       ] 
