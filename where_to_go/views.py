@@ -1,5 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from places.models import Place, Image
+from django.http import JsonResponse
+
+
+def show_detail_place(request, place_id):  
+    place = get_object_or_404(Place, id=place_id)
+    info_place = JsonResponse(
+        {
+            "title": place.title,
+            "imgs": [picture.image.url for picture in place.images.all()],
+            "description_short": place.short_description,
+            "description_long": place.long_description,
+            "coordinates": {
+                "lng": place.longitude,
+                "lat": place.latitude
+            }
+        }, json_dumps_params={'ensure_ascii': False}
+    )
+    return info_place
+
 
 def show_startpage(request):
     db_places = Place.objects.all()
