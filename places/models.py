@@ -17,7 +17,8 @@ class Image(models.Model):
                               on_delete=models.CASCADE,
                               verbose_name='Место',
                               related_name='images')
-    image = models.ImageField('Фото', upload_to='media/')
+    image = models.ImageField('Фото')
+    order = models.IntegerField('Номер')
 
     def __str__(self):
         return f'{self.id} {self.place.title}'
