@@ -4,3 +4,4 @@
 /static
 *.jpg
 /media
+.env
