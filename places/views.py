@@ -4,7 +4,7 @@ from django.urls import reverse
 from .models import Place, Image
 
 
-def show_detail_place(request, place_id):  
+def show_detail_place(request, place_id):
     place = get_object_or_404(Place, id=place_id)
     info_place = JsonResponse(
         {
@@ -41,7 +41,7 @@ def show_startpage(request):
             )
           }
         } for place in db_places
-      ] 
+      ]
     }
-    data = {'places':geojson_places}
+    data = {'places': geojson_places}
     return render(request, 'index.html', context=data)

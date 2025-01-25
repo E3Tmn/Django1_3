@@ -5,18 +5,17 @@ from .models import Place, Image
 # Register your models here.
 
 admin.site.register(Image)
+
+
 class ImageInline(SortableStackedInline):
     model = Image
-
     readonly_fields = ["preview_image"]
-    ordering = ['order',]
+    ordering = ['order', ]
 
     def preview_image(self, obj):
         return format_html(f'<img src="{obj.image.url}" width="150px" />')
 
+
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [ImageInline]
-    
-
-    

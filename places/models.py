@@ -1,6 +1,7 @@
 from django.db import models
 from tinymce.models import HTMLField
 
+
 # Create your models here.
 class Place(models.Model):
     title = models.CharField('Название', max_length=200)
@@ -11,10 +12,10 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class Image(models.Model):
-    place = models.ForeignKey(Place, 
+    place = models.ForeignKey(Place,
                               on_delete=models.CASCADE,
                               verbose_name='Место',
                               related_name='images')
