@@ -1,9 +1,9 @@
-from django.contrib import admin
-from .models import Place, Image
 from adminsortable2.admin import SortableAdminBase, SortableStackedInline
+from django.contrib import admin
 from django.utils.html import format_html
-
+from .models import Place, Image
 # Register your models here.
+
 admin.site.register(Image)
 class ImageInline(SortableStackedInline):
     model = Image
