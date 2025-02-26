@@ -8,11 +8,12 @@ admin.site.register(Image)
 
 class ImageInline(SortableStackedInline):
     model = Image
-    readonly_fields = ["preview_image"]
+    readonly_fields = ["get_preview_image"]
     ordering = ['order', ]
 
-    def preview_image(self, obj):
-        return format_html(f'<img src="{obj.image.url}" width="150px" />')
+    def get_preview_image(self, obj):
+        width = '150px'
+        return format_html(f'<img src="{obj.image.url}" max-width={width} />')
 
 
 @admin.register(Place)
