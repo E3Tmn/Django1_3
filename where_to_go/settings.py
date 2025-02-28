@@ -1,7 +1,7 @@
 import os
-from environs import env
 from pathlib import Path
 
+from environs import env
 
 env.read_env()
 
