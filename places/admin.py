@@ -3,7 +3,10 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Place, Image
 
-admin.site.register(Image)
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    raw_id_fields = ("place",)
 
 
 class ImageInline(SortableStackedInline):
