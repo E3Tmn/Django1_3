@@ -21,7 +21,9 @@ class Image(models.Model):
                               verbose_name='Место',
                               related_name='images')
     image = models.ImageField('Фото')
-    order = models.IntegerField('Номер', default=0)
+    order = models.IntegerField('Номер',
+                                default=0,
+                                db_index=True)
 
     def __str__(self):
         return f'{self.id} {self.place.title}'
