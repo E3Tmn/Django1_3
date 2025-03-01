@@ -8,7 +8,7 @@ admin.site.register(Image)
 
 class ImageInline(SortableStackedInline):
     model = Image
-    readonly_fields = ["get_preview_image"]
+    readonly_fields = ['get_preview_image']
     ordering = ['order', ]
 
     def get_preview_image(self, obj):
