@@ -6,7 +6,7 @@ from .models import Place, Image
 
 def show_detail_place(request, place_id):
     place = get_object_or_404(Place.objects.select_related(), id=place_id)
-    info_place = JsonResponse(
+    serialize_place = JsonResponse(
         {
             "title": place.title,
             "imgs": [picture.image.url for picture in place.images.all()],
@@ -18,7 +18,7 @@ def show_detail_place(request, place_id):
             }
         }, json_dumps_params={'ensure_ascii': False}
     )
-    return info_place
+    return serialize_place
 
 
 def show_startpage(request):
