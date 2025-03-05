@@ -13,16 +13,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         response = requests.get(options['link'])
-        response_json = response.json()
+        raw_response = response.json()
         Place.objects.get_or_create(
-            title=response_json['title'],
-            short_description=response_json['description_short'],
-            long_description=response_json['description_long'],
-            longitude=response_json['coordinates']['lng'],
-            latitude=response_json['coordinates']['lat']
+            title=raw_response['title'],
+            short_description=raw_response['description_short'],
+            long_description=raw_response['description_long'],
+            longitude=raw_response['coordinates']['lng'],
+            latitude=raw_response['coordinates']['lat']
         )
-        place_images = response_json['imgs']
-        place = get_object_or_404(Place, title=response_json['title'])
+        place_images = raw_response['imgs']
+        place = get_object_or_404(Place, title=raw_response['title'])
         for num, image_link in enumerate(place_images):
             image = Image.objects.get_or_create(place=place, order=num)
             image[0].image.save(
