@@ -11,6 +11,10 @@ class Place(models.Model):
                                     decimal_places=14)
     latitude = models.DecimalField('Широта', max_digits=17, decimal_places=14)
 
+    class Meta:
+        unique_together = [['title', 'longitude', 'latitude']]
+
+
     def __str__(self):
         return self.title
 
