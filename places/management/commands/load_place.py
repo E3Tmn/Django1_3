@@ -23,10 +23,11 @@ class Command(BaseCommand):
                 'long_description:':raw_response['description_long']}
         )
         place_images = raw_response['imgs']
-        response = requests.get(image_link)
-        response.raise_for_status()
+        
         for num, image_link in enumerate(place_images):
-            image = Image.objects.get_or_create(place=place, order=num)
+            response = requests.get(image_link)
+            response.raise_for_status()
+            image = Image.objects.get_or_create(place=place, image=response.content)
             image[0].image.save(
                 f'{num}.jpg',
                 ContentFile(response.content),
