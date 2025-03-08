@@ -25,11 +25,16 @@ class Command(BaseCommand):
         place_images = raw_response['imgs']
         
         for num, image_link in enumerate(place_images):
-            response = requests.get(image_link)
-            response.raise_for_status()
-            image = Image.objects.get_or_create(place=place, image=response.content)
-            image[0].image.save(
-                f'{num}.jpg',
-                ContentFile(response.content),
-                save=True
-            )
+            try:
+                response = requests.get(image_link)
+                response.raise_for_status()
+                image = Image.objects.get_or_create(place=place, image=response.content)
+                image[0].image.save(
+                    f'{num}.jpg',
+                    ContentFile(response.content),
+                    save=True
+                )
+            except requests.exceptions.HTTPError as err:
+                print(f'HTTP error occurred: {err}')
+            except requests.exceptions.ConnectionError as conerr: 
+                print("Connection error") 
