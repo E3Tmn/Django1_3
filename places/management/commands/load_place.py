@@ -13,6 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         response = requests.get(options['link'])
+        response.raise_for_status()
         raw_response = response.json()
         Place.objects.get_or_create(
             title=raw_response['title'],
@@ -24,10 +25,12 @@ class Command(BaseCommand):
         )
         place_images = raw_response['imgs']
         place = get_object_or_404(Place, title=raw_response['title'])
+        response = requests.get(image_link)
+        response.raise_for_status()
         for num, image_link in enumerate(place_images):
             image = Image.objects.get_or_create(place=place, order=num)
             image[0].image.save(
                 f'{num}.jpg',
-                ContentFile(requests.get(image_link).content),
+                ContentFile(response.content),
                 save=True
             )
