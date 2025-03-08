@@ -16,10 +16,11 @@ class Command(BaseCommand):
         raw_response = response.json()
         Place.objects.get_or_create(
             title=raw_response['title'],
-            short_description=raw_response['description_short'],
-            long_description=raw_response['description_long'],
             longitude=raw_response['coordinates']['lng'],
-            latitude=raw_response['coordinates']['lat']
+            latitude=raw_response['coordinates']['lat'],
+            defaults={
+                'short_description': raw_response['description_short'],
+                'long_description:':raw_response['description_long']}
         )
         place_images = raw_response['imgs']
         place = get_object_or_404(Place, title=raw_response['title'])
