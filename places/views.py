@@ -5,7 +5,7 @@ from .models import Place, Image
 
 
 def show_detail_place(request, place_id):
-    place = get_object_or_404(Place.objects.select_related(), id=place_id)
+    place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
     serialize_place = JsonResponse(
         {
             'title': place.title,
