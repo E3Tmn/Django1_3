@@ -18,7 +18,7 @@ class ImageInline(SortableStackedInline):
         width = '150px'
         height = '150px'
         return format_html(
-            '<img src="{}" width={} style="max-height:{}"/>',
+            '<img src="{}" style="max-width:{}; max-height:{}"/>',
             obj.image.url,
             width,
             height
