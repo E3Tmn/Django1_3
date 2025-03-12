@@ -18,10 +18,11 @@ class ImageInline(SortableStackedInline):
         width = '150px'
         height = '150px'
         return format_html(
-            '<img src="{}" width={} max_height={}/>',
+            '<img src="{}" width={} style="max-height:{}"/>',
             obj.image.url,
             width,
-            height)
+            height
+        )
 
 
 @admin.register(Place)
