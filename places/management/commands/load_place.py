@@ -14,13 +14,13 @@ class Command(BaseCommand):
         response = requests.get(options['link'])
         response.raise_for_status()
         raw_response = response.json()
-        place = Place.objects.get_or_create(
+        place, created = Place.objects.get_or_create(
             title=raw_response['title'],
             longitude=raw_response['coordinates']['lng'],
             latitude=raw_response['coordinates']['lat'],
             defaults={
                 'short_description': raw_response['description_short'],
-                'long_description:':raw_response['description_long']}
+                'long_description':raw_response['description_long']}
         )
         place_images = raw_response['imgs']
         
@@ -28,7 +28,7 @@ class Command(BaseCommand):
             try:
                 response = requests.get(image_link)
                 response.raise_for_status()
-                image = Image.objects.get_or_create(place=place, image=response.content)
+                image = Image.objects.get_or_create(place=place, order=num)
                 image[0].image.save(
                     f'{num}.jpg',
                     ContentFile(response.content),
