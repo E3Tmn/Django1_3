@@ -23,16 +23,15 @@ class Command(BaseCommand):
                 'long_description':raw_response['description_long']}
         )
         place_images = raw_response['imgs']
-        
+
         for num, image_link in enumerate(place_images):
             try:
                 response = requests.get(image_link)
                 response.raise_for_status()
-                image = Image.objects.get_or_create(place=place, order=num)
-                image[0].image.save(
-                    f'{num}.jpg',
-                    ContentFile(response.content),
-                    save=True
+                image = Image.objects.get_or_create(
+                    place=place,
+                    order=num,
+                    image=ContentFile(response.content, name=f'{num}.jpg')
                 )
             except requests.exceptions.HTTPError as err:
                 print(f'HTTP error occurred: {err}')
