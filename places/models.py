@@ -34,5 +34,8 @@ class Image(models.Model):
         db_index=True
     )
 
+    class Meta:
+        ordering = ["order"]
+
     def __str__(self):
         return f'{self.id} {self.place.title}'
